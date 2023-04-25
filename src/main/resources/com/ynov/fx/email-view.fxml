@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
+
+
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Button?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ynov.fx.EmailController">
+    <children>
+        <ToolBar>
+            <items>
+                <Button text="Actualiser" onAction="#refreshAction" />
+                <Button text="Aide" fx:id="buttonHelp" />
+            </items>
+        </ToolBar>
+        <SplitPane dividerPositions="0.3" prefHeight="385.0" prefWidth="600.0">
+            <items>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                    <children>
+                        <TreeView prefHeight="355.0" prefWidth="223.0" fx:id="viewEmailList"/>
+                    </children>
+                </AnchorPane>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                    <children>
+                        <WebView prefHeight="355.0" prefWidth="370.0" fx:id="viewEmailContent"/>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+        <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+                <Pane prefHeight="18.0" prefWidth="602.0">
+                    <children>
+                        <Label fx:id="statusText" text="Status bar" />
+                    </children>
+                </Pane>
+            </children>
+        </HBox>
+    </children>
+</VBox>
