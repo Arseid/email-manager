@@ -5,48 +5,37 @@
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
-<?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
       prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.ynov.fx.EmailController">
-    <children>
-        <ToolBar>
-            <items>
-                <Button text="Actualiser" onAction="#refreshAction" />
-                <Button text="Aide" fx:id="buttonHelp" />
-            </items>
-        </ToolBar>
-        <SplitPane dividerPositions="0.3" prefHeight="385.0" prefWidth="600.0">
-            <items>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                    <children>
-                        <TreeView prefHeight="355.0" prefWidth="223.0" fx:id="viewEmailList"
-                                  AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
-                                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                    <children>
-                        <WebView prefHeight="355.0" prefWidth="370.0" fx:id="viewEmailContent"
-                                 AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
-                                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                    </children>
-                </AnchorPane>
-            </items>
-        </SplitPane>
-        <HBox prefHeight="100.0" prefWidth="200.0">
-            <children>
-                <Pane prefHeight="18.0" prefWidth="602.0">
-                    <children>
-                        <Label fx:id="statusText" text="Status bar" />
-                    </children>
-                </Pane>
-            </children>
-        </HBox>
-    </children>
+    <MenuBar>
+        <Menu text="Emails">
+            <MenuItem text="Actualiser" onAction="#refreshAction" />
+            <MenuItem text="Ecrire" onAction="#openComposeEmail"/>
+        </Menu>
+        <Menu text="Aide">
+            <MenuItem text="A propos" />
+        </Menu>
+    </MenuBar>
+    <SplitPane dividerPositions="0.3" prefHeight="385.0" prefWidth="600.0">
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <TreeView prefHeight="355.0" prefWidth="223.0" fx:id="viewEmailList"
+                      AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+        </AnchorPane>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <WebView prefHeight="355.0" prefWidth="370.0" fx:id="viewEmailContent"
+                     AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+                     AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+        </AnchorPane>
+    </SplitPane>
+    <HBox minHeight="25.0" maxHeight="25.0" prefHeight="25.0" prefWidth="200.0">
+        <Label fx:id="statusText" text="Status bar" />
+    </HBox>
 </VBox>

@@ -5,12 +5,17 @@ import com.ynov.email.EmailManager;
 import com.ynov.email.ReadEmails;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -112,6 +117,21 @@ public class EmailController {
 
         viewEmailList.setRoot(root);
         root.setExpanded(true);
+    }
+
+    @FXML
+    private void openComposeEmail() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("compose-email.fxml"));
+            Parent composeEmailParent = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Composer un Email");
+            stage.setScene(new Scene(composeEmailParent));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
