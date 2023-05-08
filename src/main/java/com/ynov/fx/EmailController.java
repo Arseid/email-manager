@@ -16,6 +16,7 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -82,6 +83,7 @@ public class EmailController {
         List<Email> emails;
         try {
             emails = fetchAll();
+            Collections.reverse(emails);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

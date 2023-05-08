@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -138,6 +139,8 @@ public class Email extends PersistentObject{
 
     @Override
     public String toString() {
-        return "[+"+date+"] - "+subject;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+        String formattedDate = sdf.format(date);
+        return formattedDate + " - " + subject;
     }
 }
