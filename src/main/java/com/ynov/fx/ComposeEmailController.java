@@ -1,21 +1,34 @@
 package com.ynov.fx;
 
+import com.ynov.email.Email;
+import com.ynov.email.EmailManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+import java.util.Properties;
+
 public class ComposeEmailController {
 
     @FXML
-    private TextField recipientField;
+    private TextField recipient;
 
     @FXML
-    private TextField subjectField;
+    private TextField subject;
 
     @FXML
-    private TextArea messageField;
+    private TextArea message;
 
     public void sendEmail() {
-        // Add the logic to send the email using the input from the text fields.
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.imaps.host", "imap.gmail.com");
+        properties.put("mail.imaps.port", "993");
+        properties.put("mail.imaps.ssl.enable", "true");
+        EmailManager emailManager = new EmailManager("luminetruemain@gmail.com", "ycddltifbbamgmcm", properties);
+        emailManager.sendEmail(recipient.getText(), subject.getText(), message.getText());
     }
 }

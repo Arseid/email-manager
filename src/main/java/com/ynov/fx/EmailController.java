@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
