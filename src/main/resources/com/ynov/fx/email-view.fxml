@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
-
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Button?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
@@ -26,12 +25,16 @@
             <items>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                     <children>
-                        <TreeView prefHeight="355.0" prefWidth="223.0" fx:id="viewEmailList"/>
+                        <TreeView prefHeight="355.0" prefWidth="223.0" fx:id="viewEmailList"
+                                  AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+                                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                     </children>
                 </AnchorPane>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                     <children>
-                        <WebView prefHeight="355.0" prefWidth="370.0" fx:id="viewEmailContent"/>
+                        <WebView prefHeight="355.0" prefWidth="370.0" fx:id="viewEmailContent"
+                                 AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+                                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                     </children>
                 </AnchorPane>
             </items>
