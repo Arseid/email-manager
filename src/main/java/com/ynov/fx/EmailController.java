@@ -15,9 +15,11 @@ import javafx.scene.web.WebView;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
+
+import static com.ynov.email.Email.fetchAll;
 
 public class EmailController {
 
@@ -49,7 +51,6 @@ public class EmailController {
 
         EmailManager emailManager = new EmailManager(owner, appPassword, properties);
 
-        List<Email> emails = new ArrayList<>();
         try {
             // Lit et affiche les emails
             List<Message> messages = emailManager.readEmails();
@@ -59,15 +60,31 @@ public class EmailController {
                 // System.out.println("From: " + message.getFrom()[0]);
                 // System.out.println("Date: " + message.getSentDate());
                 // System.out.println("Body: " + ReadEmails.getTextFromMessage(message));
-                emails.add(new Email(message.getSubject(), message.getFrom()[0].toString(),
-                        ReadEmails.getTextFromMessage(message), message.getSentDate()));
+                //emails.add(new Email(message.getSubject(), message.getFrom()[0].toString(),
+                //        ReadEmails.getTextFromMessage(message), message.getSentDate()));
+                Email email = new Email(message.getSubject(), message.getFrom()[0].toString(),
+                        ReadEmails.getTextFromMessage(message), message.getSentDate());
+                if (!email.exists()) {
+                    email.persist();
+                }
             }
+            System.out.println(messages);
         } catch (MessagingException | IOException e) {
             e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
         // Création de la racine de mon TreeView
         TreeItem<Object> root = new TreeItem<>("Boite de réception");
+
+        // Récupération de tous les emails en bdd
+        List<Email> emails;
+        try {
+            emails = fetchAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         // Itération sur les émails et nouveau tree item pour chaque email parcouru
         for (Email email: emails) {

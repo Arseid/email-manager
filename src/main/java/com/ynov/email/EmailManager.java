@@ -76,10 +76,12 @@ public class EmailManager {
             messages.add(message);
         }
 
-        // Ferme la boite
-        // inbox.close(false);
-        // store.close();
+        List<Message> listMessages = messages;
 
-        return messages;
+         // Ferme la boite
+         // inbox.close(false);
+         // store.close();
+
+        return listMessages;
     }
 }
