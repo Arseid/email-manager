@@ -8,10 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.SelectionModel;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
@@ -140,16 +137,21 @@ public class EmailController {
         }
     }
 
-    public void showAboutWindow() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("about.fxml"));
-        Parent aboutParent = fxmlLoader.load();
+    @FXML
+    private void showAboutWindow() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("about.fxml"));
+            Parent aboutContent = loader.load();
 
-        Scene aboutScene = new Scene(aboutParent);
-        Stage aboutStage = new Stage();
-        aboutStage.initModality(Modality.APPLICATION_MODAL);
-        aboutStage.setScene(aboutScene);
-        aboutStage.setTitle("A propos");
-        aboutStage.show();
+            Dialog<Object> aboutDialog = new Dialog<>();
+            aboutDialog.setTitle("A propos");
+            aboutDialog.getDialogPane().setContent(aboutContent);
+            aboutDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
+            aboutDialog.setResizable(true);
+            aboutDialog.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
