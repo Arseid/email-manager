@@ -11,6 +11,8 @@
     <VBox spacing="10.0" AnchorPane.topAnchor="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
         <Label text="Recipient:" />
         <TextField fx:id="recipient" />
+        <Label text="CC:" />
+        <TextField fx:id="cc" />
         <Label text="Subject:" />
         <TextField fx:id="subject" />
         <Label text="Message:" />

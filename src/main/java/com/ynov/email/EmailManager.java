@@ -35,7 +35,7 @@ public class EmailManager {
         this.managerProperties = managerProperties;
     }
 
-    public void sendEmail (List<String> recipients, String subject, String body) {
+    public void sendEmail (List<String> recipients, List<String> ccRecipients, String subject, String body) {
         // Authentification auprès du serveur
             Session session = Session.getInstance(managerProperties, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -51,6 +51,11 @@ public class EmailManager {
             // Set recipients
             for (String recipient : recipients) {
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+            }
+
+            // Set CC recipients
+            for (String ccRecipient : ccRecipients) {
+                message.addRecipient(Message.RecipientType.CC, new InternetAddress(ccRecipient));
             }
 
             message.setSubject(subject);
