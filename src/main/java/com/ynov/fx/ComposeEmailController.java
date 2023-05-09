@@ -34,9 +34,6 @@ public class ComposeEmailController {
     @FXML
     private TextField attachments;
 
-    @FXML
-    private Button addAttachmentButton;
-
     private EmailController emailController;
 
     private List<String> attachmentPaths = new ArrayList<>();
@@ -70,14 +67,21 @@ public class ComposeEmailController {
         // Parse recipients from the input field
         List<String> recipients = Arrays.asList(recipient.getText().split("[;,]\\s*"));
 
-        // Parse CC recipients from the input field
-        List<String> ccRecipients = Arrays.asList(cc.getText().split("[;,]\\s*"));
-
-        // Parse BCC recipients from the input field
-        List<String> bccRecipients = Arrays.asList(bcc.getText().split("[;,]\\s*"));
-
         EmailManager emailManager = new EmailManager("luminetruemain@gmail.com", "ycddltifbbamgmcm", properties);
-        emailManager.sendEmail(recipients, ccRecipients, bccRecipients, subject.getText(), message.getText(), attachmentPaths);
+
+        // Check if the CC field is empty
+        List<String> ccRecipients = cc.getText().isEmpty() ? null : Arrays.asList(cc.getText().split("[;,]\\s*"));
+
+        // Check if the BCC field is empty
+        List<String> bccRecipients = bcc.getText().isEmpty() ? null : Arrays.asList(bcc.getText().split("[;,]\\s*"));
+
+        // Check if there are any attachments
+        List<File> attachmentsList = attachmentPaths.isEmpty() ? null : new ArrayList<>();
+        for (String path : attachmentPaths) {
+            attachmentsList.add(new File(path));
+        }
+
+        emailManager.sendEmail(recipients, ccRecipients, bccRecipients, subject.getText(), message.getText(), attachmentsList);
 
         // Update status bar
         if (emailController != null) {

@@ -7,6 +7,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -40,7 +41,7 @@ public class EmailManager {
     }
 
     public void sendEmail (List<String> recipients, List<String> ccRecipients, List<String> bccRecipients,
-                           String subject, String body, List<String> attachments) {
+                           String subject, String body, List<File> attachments) {
         // Authentification auprès du serveur
             Session session = Session.getInstance(managerProperties, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -59,13 +60,17 @@ public class EmailManager {
             }
 
             // Set CC recipients
-            for (String ccRecipient : ccRecipients) {
-                message.addRecipient(Message.RecipientType.CC, new InternetAddress(ccRecipient));
+            if (ccRecipients != null) {
+                for (String ccRecipient : ccRecipients) {
+                    message.addRecipient(Message.RecipientType.CC, new InternetAddress(ccRecipient));
+                }
             }
 
             // Set BCC recipients
-            for (String bccRecipient : bccRecipients) {
-                message.addRecipient(Message.RecipientType.BCC, new InternetAddress(bccRecipient));
+            if (bccRecipients != null) {
+                for (String bccRecipient : bccRecipients) {
+                    message.addRecipient(Message.RecipientType.BCC, new InternetAddress(bccRecipient));
+                }
             }
 
             message.setSubject(subject);
@@ -79,12 +84,14 @@ public class EmailManager {
             multipart.addBodyPart(messageBodyPart);
 
             // Add attachments
-            for (String filePath : attachments) {
-                messageBodyPart = new MimeBodyPart();
-                FileDataSource source = new FileDataSource(filePath);
-                messageBodyPart.setDataHandler(new DataHandler(source));
-                messageBodyPart.setFileName(source.getName());
-                multipart.addBodyPart(messageBodyPart);
+            if (attachments != null) {
+                for (File filePath : attachments) {
+                    messageBodyPart = new MimeBodyPart();
+                    FileDataSource source = new FileDataSource(filePath);
+                    messageBodyPart.setDataHandler(new DataHandler(source));
+                    messageBodyPart.setFileName(source.getName());
+                    multipart.addBodyPart(messageBodyPart);
+                }
             }
 
             // Set the message's content to the multipart

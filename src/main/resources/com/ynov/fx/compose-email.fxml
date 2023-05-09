@@ -23,7 +23,7 @@
         <Label text="Attachments:" />
         <HBox spacing="10.0">
             <TextField fx:id="attachments" editable="false" />
-            <Button fx:id="addAttachmentButton" text="Add" onAction="#addAttachment" />
+            <Button text="Add" onAction="#addAttachment" />
         </HBox>
         <Button text="Send" onAction="#sendEmail"/>
     </VBox>
