@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -42,6 +41,8 @@ public class EmailController {
     private WebView viewEmailContent;
 
     public void initialize(){
+        updateStatusText("Connexion à la boite de réception");
+
         // Serveur properties
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
@@ -58,6 +59,7 @@ public class EmailController {
 
         EmailManager emailManager = new EmailManager(owner, appPassword, properties);
 
+        updateStatusText("Mise à jour des emails");
         try {
             // Lit et affiche les emails
             List<Message> messages = emailManager.readEmails();
@@ -81,6 +83,7 @@ public class EmailController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        updateStatusText("Mise à jour terminée");
 
         // Création de la racine de mon TreeView
         TreeItem<Object> root = new TreeItem<>("Boite de réception");
@@ -125,6 +128,8 @@ public class EmailController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("compose-email.fxml"));
             Parent composeEmailParent = fxmlLoader.load();
+            ComposeEmailController composeEmailController = fxmlLoader.getController();
+            composeEmailController.setEmailController(this);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Composer un Email");

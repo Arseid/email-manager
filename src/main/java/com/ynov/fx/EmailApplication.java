@@ -16,7 +16,7 @@ public class EmailApplication extends Application {
             Scene scene = new Scene(fxmlLoader.load(), 1000, 400);
 
             EmailController controller = fxmlLoader.getController();
-            controller.updateStatusText("Email Inbox Desktop Applicationw");
+            controller.updateStatusText("Email Inbox Desktop Application");
 
             primaryStage.setTitle("Email Inbox");
             primaryStage.setScene(scene);

@@ -1,6 +1,5 @@
 package com.ynov.fx;
 
-import com.ynov.email.Email;
 import com.ynov.email.EmailManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -20,6 +19,12 @@ public class ComposeEmailController {
     @FXML
     private TextArea message;
 
+    private EmailController emailController;
+
+    public void setEmailController(EmailController emailController) {
+        this.emailController = emailController;
+    }
+
     public void sendEmail() {
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
@@ -31,6 +36,11 @@ public class ComposeEmailController {
         properties.put("mail.imaps.ssl.enable", "true");
         EmailManager emailManager = new EmailManager("luminetruemain@gmail.com", "ycddltifbbamgmcm", properties);
         emailManager.sendEmail(recipient.getText(), subject.getText(), message.getText());
+
+        // Update status bar
+        if (emailController != null) {
+            emailController.updateStatusText("Email envoyé");
+        }
 
         // Close the window
         Stage stage = (Stage) recipient.getScene().getWindow();
