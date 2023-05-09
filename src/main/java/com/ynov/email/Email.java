@@ -17,6 +17,14 @@ public class Email extends PersistentObject{
     private String body;
     private Date date;
 
+    /**
+     * Constructs an Email.
+     *
+     * @param subject The subject of the email.
+     * @param sender The sender of the email.
+     * @param body The body of the email.
+     * @param date The date the email was sent.
+     */
     public Email(String subject, String sender, String body, Date date) {
         this.subject = subject;
         this.sender = sender;
@@ -56,6 +64,12 @@ public class Email extends PersistentObject{
         this.date = date;
     }
 
+    /**
+     * Checks if the email exists in the database.
+     *
+     * @return True if the email exists in the database, false otherwise.
+     * @throws SQLException If there's an error while querying the database.
+     */
     public boolean exists() throws SQLException {
         Connection connection = dbConnection();
 
@@ -74,6 +88,11 @@ public class Email extends PersistentObject{
         return exists;
     }
 
+    /**
+     * Inserts the email into the database.
+     *
+     * @throws SQLException If there's an error while querying the database.
+     */
     private void insert() throws SQLException {
         Connection connection = dbConnection();
 
@@ -90,6 +109,11 @@ public class Email extends PersistentObject{
         connection.close();
     }
 
+    /**
+     * Updates the email in the database.
+     *
+     * @throws SQLException If there's an error while querying the database.
+     */
     private void update() throws SQLException {
         Connection connection = dbConnection();
 
@@ -106,11 +130,22 @@ public class Email extends PersistentObject{
         connection.close();
     }
 
+    /**
+     * Persists the email in the database by updating or inserting it.
+     *
+     * @throws SQLException If there's an error while querying the database.
+     */
     public void persist() throws SQLException {
         if (exists()) update();
         else insert();
     }
 
+    /**
+     * Fetches all emails from the database and returns them as a List.
+     *
+     * @return A List of Email.
+     * @throws SQLException If there's an error while querying the database.
+     */
     public static List<Email> fetchAll() throws SQLException {
         Connection connection = dbConnection();
 
@@ -137,6 +172,11 @@ public class Email extends PersistentObject{
         return emailsList;
     }
 
+    /**
+     * Returns a String representation of the email, made up of the formatted date and the subject.
+     *
+     * @return A String representation of the email.
+     */
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");

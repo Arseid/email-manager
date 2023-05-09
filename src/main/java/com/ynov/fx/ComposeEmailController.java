@@ -42,6 +42,10 @@ public class ComposeEmailController {
         this.emailController = emailController;
     }
 
+    /**
+     * Opens a file chooser to select an attachment file.
+     * Adds the selected file to the list of attachments and updates the attachments TextField.
+     */
     @FXML
     private void addAttachment() {
         FileChooser fileChooser = new FileChooser();
@@ -54,6 +58,12 @@ public class ComposeEmailController {
         }
     }
 
+    /**
+     * Sends an email with the input field values.
+     * Initializes the EmailManager with the given configuration properties.
+     * Parses recipients, CC, and BCC fields, and sends the email with the specified subject, message, and attachments.
+     * After sending the email, updates the status bar and closes the Compose Email window.
+     */
     public void sendEmail() {
         Properties properties = ConfigLoader.loadConfig();
 

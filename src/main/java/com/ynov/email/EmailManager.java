@@ -18,6 +18,13 @@ public class EmailManager {
 
     private Properties managerProperties;
 
+    /**
+     * Constructs an EmailManager.
+     *
+     * @param owner The email address of the owner.
+     * @param appPassword The application password of the owner's email.
+     * @param managerProperties The properties for the email manager.
+     */
     public EmailManager(String owner, String appPassword, Properties managerProperties) {
         this.owner = owner;
         this.appPassword = appPassword;
@@ -40,9 +47,19 @@ public class EmailManager {
         this.managerProperties = managerProperties;
     }
 
+    /**
+     * Sends an email. The CC/BCC recipients and attachments are optional.
+     *
+     * @param recipients The list of recipients.
+     * @param ccRecipients The list of CC recipients.
+     * @param bccRecipients The list of BCC recipients.
+     * @param subject The subject of the email.
+     * @param body The body of the email.
+     * @param attachments The list of attachments.
+     */
     public void sendEmail (List<String> recipients, List<String> ccRecipients, List<String> bccRecipients,
                            String subject, String body, List<File> attachments) {
-        // Authentification auprès du serveur
+        // Log in the server
             Session session = Session.getInstance(managerProperties, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(owner, appPassword);
@@ -50,7 +67,7 @@ public class EmailManager {
         });
 
         try {
-            // Création du message à envoyer
+            // Create message to send
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(owner));
 
@@ -105,17 +122,23 @@ public class EmailManager {
         }
     }
 
+    /**
+     * Reads emails from the inbox and returns them as a list of Message.
+     *
+     * @return A list of Message from the inbox.
+     * @throws MessagingException If there's an error while reading emails.
+     */
     public List<Message> readEmails() throws MessagingException {
-        // Authentification auprès du serveur
+        // Log in the server
         Session session = Session.getDefaultInstance(managerProperties);
         Store store = session.getStore("imaps");
         store.connect("imap.gmail.com", owner, appPassword);
 
-        // Ouvre la boite des messages
+        // Opens the inbox
         Folder inbox = store.getFolder("INBOX");
         inbox.open(Folder.READ_ONLY);
 
-        // Récupère les messages
+        // Fetch messages
         List<Message> messages = new ArrayList<>();
         for (Message message : inbox.getMessages()) {
 

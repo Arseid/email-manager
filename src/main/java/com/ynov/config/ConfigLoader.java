@@ -5,6 +5,11 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigLoader {
+    /**
+     * Loads the configuration from the specified properties file.
+     *
+     * @return A properties containing the necessary configuration.
+     */
     public static Properties loadConfig() {
         Properties properties = new Properties();
         String configFileName = "config.properties";

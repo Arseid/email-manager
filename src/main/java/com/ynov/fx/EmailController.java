@@ -38,13 +38,18 @@ public class EmailController {
     @FXML
     private WebView viewEmailContent;
 
+    /**
+     * Initializes the EmailController and sets up the application.
+     * Connects to the email account, reads emails, and populates the TreeView with email data.
+     * Sets up the WebView to display the selected email's content.
+     */
     public void initialize(){
         updateStatusText("Connexion à la boite de réception");
 
-        // Serveur properties
+        // Server properties
         Properties properties = ConfigLoader.loadConfig();
 
-        // Informations du propriétaire
+        // Owner's info
         String owner = properties.getProperty("owner");
         String appPassword = properties.getProperty("appPassword");
 
@@ -76,10 +81,10 @@ public class EmailController {
         }
         updateStatusText("Mise à jour terminée");
 
-        // Création de la racine de mon TreeView
+        // Create TreeView's root
         TreeItem<Object> root = new TreeItem<>("Boite de réception");
 
-        // Récupération de tous les emails en bdd
+        // Fetch all emails in the database
         List<Email> emails;
         try {
             emails = fetchAll();
@@ -88,7 +93,7 @@ public class EmailController {
             throw new RuntimeException(e);
         }
 
-        // Itération sur les émails et nouveau tree item pour chaque email parcouru
+        // Iteration on emails and new tree item for each browsed email
         for (Email email: emails) {
             root.getChildren().add(new TreeItem<>(email));
         }
@@ -114,6 +119,10 @@ public class EmailController {
         root.setExpanded(true);
     }
 
+    /**
+     * Opens the Compose Email window as a modal dialog.
+     * Sets the current EmailController as the ComposeEmailController's EmailController.
+     */
     @FXML
     private void openComposeEmail() {
         try {
@@ -131,6 +140,9 @@ public class EmailController {
         }
     }
 
+    /**
+     * Displays a modal dialog of the context of the application.
+     */
     @FXML
     private void showAboutWindow() {
         try {
@@ -148,12 +160,21 @@ public class EmailController {
         }
     }
 
+    /**
+     * Refreshes the email list by removing the change listener, re-initializing the controller,
+     * and re-attaching the change listener.
+     */
     @FXML
     public void refreshAction() {
         viewEmailList.getSelectionModel().selectedItemProperty().removeListener(changeListener);
         initialize();
     }
 
+    /**
+     * Updates the status text with the text in parameter.
+     *
+     * @param newText The new text for the status bar.
+     */
     public void updateStatusText(String newText) {
         statusText.setText(newText);
     }
