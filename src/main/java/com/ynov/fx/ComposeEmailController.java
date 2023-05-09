@@ -2,10 +2,14 @@ package com.ynov.fx;
 
 import com.ynov.email.EmailManager;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -27,10 +31,30 @@ public class ComposeEmailController {
     @FXML
     private TextArea message;
 
+    @FXML
+    private TextField attachments;
+
+    @FXML
+    private Button addAttachmentButton;
+
     private EmailController emailController;
+
+    private List<String> attachmentPaths = new ArrayList<>();
 
     public void setEmailController(EmailController emailController) {
         this.emailController = emailController;
+    }
+
+    @FXML
+    private void addAttachment() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select an attachment");
+        File file = fileChooser.showOpenDialog(recipient.getScene().getWindow());
+
+        if (file != null) {
+            attachmentPaths.add(file.getAbsolutePath());
+            attachments.setText(attachments.getText() + (attachments.getText().isEmpty() ? "" : ", ") + file.getName());
+        }
     }
 
     public void sendEmail() {
@@ -53,7 +77,7 @@ public class ComposeEmailController {
         List<String> bccRecipients = Arrays.asList(bcc.getText().split("[;,]\\s*"));
 
         EmailManager emailManager = new EmailManager("luminetruemain@gmail.com", "ycddltifbbamgmcm", properties);
-        emailManager.sendEmail(recipients, ccRecipients, bccRecipients, subject.getText(), message.getText());
+        emailManager.sendEmail(recipients, ccRecipients, bccRecipients, subject.getText(), message.getText(), attachmentPaths);
 
         // Update status bar
         if (emailController != null) {

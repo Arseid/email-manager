@@ -2,7 +2,11 @@ package com.ynov.email;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -35,7 +39,8 @@ public class EmailManager {
         this.managerProperties = managerProperties;
     }
 
-    public void sendEmail (List<String> recipients, List<String> ccRecipients, List<String> bccRecipients, String subject, String body) {
+    public void sendEmail (List<String> recipients, List<String> ccRecipients, List<String> bccRecipients,
+                           String subject, String body, List<String> attachments) {
         // Authentification auprès du serveur
             Session session = Session.getInstance(managerProperties, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -64,7 +69,26 @@ public class EmailManager {
             }
 
             message.setSubject(subject);
-            message.setText(body);
+
+            // Create the message body part
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setText(body);
+
+            // Create a multipart message
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+
+            // Add attachments
+            for (String filePath : attachments) {
+                messageBodyPart = new MimeBodyPart();
+                FileDataSource source = new FileDataSource(filePath);
+                messageBodyPart.setDataHandler(new DataHandler(source));
+                messageBodyPart.setFileName(source.getName());
+                multipart.addBodyPart(messageBodyPart);
+            }
+
+            // Set the message's content to the multipart
+            message.setContent(multipart);
 
             // Send the message
             Transport.send(message);
