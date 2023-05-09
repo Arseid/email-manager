@@ -13,7 +13,7 @@ public class EmailApplication extends Application {
     public void start(Stage primaryStage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(EmailApplication.class.getResource("email-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1000, 400);
+            Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
 
             EmailController controller = fxmlLoader.getController();
             controller.updateStatusText("Email Inbox Desktop Application");
