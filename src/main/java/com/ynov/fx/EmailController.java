@@ -1,5 +1,6 @@
 package com.ynov.fx;
 
+import com.ynov.config.ConfigLoader;
 import com.ynov.email.Email;
 import com.ynov.email.EmailManager;
 import com.ynov.email.ReadEmails;
@@ -41,18 +42,11 @@ public class EmailController {
         updateStatusText("Connexion à la boite de réception");
 
         // Serveur properties
-        Properties properties = new Properties();
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
-        properties.put("mail.imaps.host", "imap.gmail.com");
-        properties.put("mail.imaps.port", "993");
-        properties.put("mail.imaps.ssl.enable", "true");
+        Properties properties = ConfigLoader.loadConfig();
 
         // Informations du propriétaire
-        String owner = "luminetruemain@gmail.com";
-        String appPassword = "ycddltifbbamgmcm";
+        String owner = properties.getProperty("owner");
+        String appPassword = properties.getProperty("appPassword");
 
         EmailManager emailManager = new EmailManager(owner, appPassword, properties);
 

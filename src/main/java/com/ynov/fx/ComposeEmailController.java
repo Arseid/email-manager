@@ -1,8 +1,8 @@
 package com.ynov.fx;
 
+import com.ynov.config.ConfigLoader;
 import com.ynov.email.EmailManager;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -36,7 +36,7 @@ public class ComposeEmailController {
 
     private EmailController emailController;
 
-    private List<String> attachmentPaths = new ArrayList<>();
+    private final List<String> attachmentPaths = new ArrayList<>();
 
     public void setEmailController(EmailController emailController) {
         this.emailController = emailController;
@@ -55,14 +55,7 @@ public class ComposeEmailController {
     }
 
     public void sendEmail() {
-        Properties properties = new Properties();
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
-        properties.put("mail.imaps.host", "imap.gmail.com");
-        properties.put("mail.imaps.port", "993");
-        properties.put("mail.imaps.ssl.enable", "true");
+        Properties properties = ConfigLoader.loadConfig();
 
         // Parse recipients from the input field
         List<String> recipients = Arrays.asList(recipient.getText().split("[;,]\\s*"));
