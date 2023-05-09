@@ -70,7 +70,7 @@ public class ComposeEmailController {
         // Parse recipients from the input field
         List<String> recipients = Arrays.asList(recipient.getText().split("[;,]\\s*"));
 
-        EmailManager emailManager = new EmailManager("luminetruemain@gmail.com", "ycddltifbbamgmcm", properties);
+        EmailManager emailManager = new EmailManager(properties.getProperty("owner"), properties.getProperty("appPassword"), properties);
 
         // Check if the CC field is empty
         List<String> ccRecipients = cc.getText().isEmpty() ? null : Arrays.asList(cc.getText().split("[;,]\\s*"));
