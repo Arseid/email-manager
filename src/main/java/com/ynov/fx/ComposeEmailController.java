@@ -5,6 +5,7 @@ import com.ynov.email.EmailManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.util.Properties;
 
@@ -30,5 +31,9 @@ public class ComposeEmailController {
         properties.put("mail.imaps.ssl.enable", "true");
         EmailManager emailManager = new EmailManager("luminetruemain@gmail.com", "ycddltifbbamgmcm", properties);
         emailManager.sendEmail(recipient.getText(), subject.getText(), message.getText());
+
+        // Close the window
+        Stage stage = (Stage) recipient.getScene().getWindow();
+        stage.close();
     }
 }
