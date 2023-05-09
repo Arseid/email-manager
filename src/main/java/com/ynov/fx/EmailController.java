@@ -140,6 +140,18 @@ public class EmailController {
         }
     }
 
+    public void showAboutWindow() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("about.fxml"));
+        Parent aboutParent = fxmlLoader.load();
+
+        Scene aboutScene = new Scene(aboutParent);
+        Stage aboutStage = new Stage();
+        aboutStage.initModality(Modality.APPLICATION_MODAL);
+        aboutStage.setScene(aboutScene);
+        aboutStage.setTitle("A propos");
+        aboutStage.show();
+    }
+
     @FXML
     public void refreshAction() {
         viewEmailList.getSelectionModel().selectedItemProperty().removeListener(changeListener);
