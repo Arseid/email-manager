@@ -19,6 +19,9 @@ public class ComposeEmailController {
     private TextField cc;
 
     @FXML
+    private TextField bcc;
+
+    @FXML
     private TextField subject;
 
     @FXML
@@ -46,8 +49,11 @@ public class ComposeEmailController {
         // Parse CC recipients from the input field
         List<String> ccRecipients = Arrays.asList(cc.getText().split("[;,]\\s*"));
 
+        // Parse BCC recipients from the input field
+        List<String> bccRecipients = Arrays.asList(bcc.getText().split("[;,]\\s*"));
+
         EmailManager emailManager = new EmailManager("luminetruemain@gmail.com", "ycddltifbbamgmcm", properties);
-        emailManager.sendEmail(recipients, ccRecipients, subject.getText(), message.getText());
+        emailManager.sendEmail(recipients, ccRecipients, bccRecipients, subject.getText(), message.getText());
 
         // Update status bar
         if (emailController != null) {

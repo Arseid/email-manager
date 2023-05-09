@@ -13,6 +13,8 @@
         <TextField fx:id="recipient" />
         <Label text="CC:" />
         <TextField fx:id="cc" />
+        <Label text="BCC:" />
+        <TextField fx:id="bcc" />
         <Label text="Subject:" />
         <TextField fx:id="subject" />
         <Label text="Message:" />
