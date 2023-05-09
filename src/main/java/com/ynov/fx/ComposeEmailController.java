@@ -6,6 +6,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 public class ComposeEmailController {
@@ -34,8 +36,12 @@ public class ComposeEmailController {
         properties.put("mail.imaps.host", "imap.gmail.com");
         properties.put("mail.imaps.port", "993");
         properties.put("mail.imaps.ssl.enable", "true");
+
+        // Parse recipients from the input field
+        List<String> recipients = Arrays.asList(recipient.getText().split("[;,]\\s*"));
+
         EmailManager emailManager = new EmailManager("luminetruemain@gmail.com", "ycddltifbbamgmcm", properties);
-        emailManager.sendEmail(recipient.getText(), subject.getText(), message.getText());
+        emailManager.sendEmail(recipients, subject.getText(), message.getText());
 
         // Update status bar
         if (emailController != null) {

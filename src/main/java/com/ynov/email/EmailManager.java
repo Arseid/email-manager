@@ -35,7 +35,7 @@ public class EmailManager {
         this.managerProperties = managerProperties;
     }
 
-    public void sendEmail (String receiver, String subject, String body) {
+    public void sendEmail (List<String> recipients, String subject, String body) {
         // Authentification auprès du serveur
             Session session = Session.getInstance(managerProperties, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -47,11 +47,16 @@ public class EmailManager {
             // Création du message à envoyer
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(owner));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiver));
+
+            // Set recipients
+            for (String recipient : recipients) {
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+            }
+
             message.setSubject(subject);
             message.setText(body);
 
-            // Envoie du message
+            // Send the message
             Transport.send(message);
 
         } catch (MessagingException e) {
